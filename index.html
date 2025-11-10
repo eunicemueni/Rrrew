@@ -27,11 +27,12 @@
   </div>
 </section>
 <!-- Place this at the bottom, just before </body> -->
-  <section class="max-w-6xl mx-auto px-6 py-12">
+  <!-- Affiliate Dashboard (Tailwind UI only) -->
+<section class="max-w-6xl mx-auto px-6 py-12">
   <h1 class="text-4xl font-bold text-[#D4AF37] mb-10">Affiliate Dashboard</h1>
 
   <!-- Referral Link -->
-  <div class="bg-[#2b1f38] p-6 rounded-xl mb-10 shadow-lg">
+  <div class="bg-[#2b1f38] p-6 rounded-xl mb-6 shadow-lg">
     <h2 class="text-2xl font-semibold mb-3">Your Referral Link</h2>
     <div class="flex items-center gap-3">
       <input id="refLink" type="text" readonly class="w-full bg-[#1a1424] border border-[#D4AF37] px-4 py-2 rounded-lg" />
@@ -40,32 +41,99 @@
     <p id="copyMsg" class="text-sm text-green-400 mt-2 opacity-0 transition">Copied!</p>
   </div>
 
-  <!-- Stats Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+  <!-- Top Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
     <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
       <p class="text-lg font-semibold mb-1">Total Referrals</p>
-      <p id="totalReferrals" class="text-4xl font-bold">0</p>
+      <p id="totalReferrals" class="text-3xl font-bold">0</p>
     </div>
 
     <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
-      <p class="text-lg font-semibold mb-1">Total Earnings</p>
-      <p id="totalEarnings" class="text-4xl font-bold">$0</p>
+      <p class="text-lg font-semibold mb-1">Total Commissions</p>
+      <p id="totalCommissions" class="text-3xl font-bold">$0</p>
+    </div>
+
+    <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
+      <p class="text-lg font-semibold mb-1">Total Payouts</p>
+      <p id="totalPayouts" class="text-3xl font-bold">$0</p>
     </div>
 
     <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
       <p class="text-lg font-semibold mb-1">High-Tier Sales</p>
-      <p id="highTierCount" class="text-4xl font-bold">0</p>
+      <p id="highTierCount" class="text-3xl font-bold">0</p>
       <p class="text-sm opacity-70">(Diamond + Lifetime)</p>
     </div>
   </div>
 
+  <!-- Commission Breakdown Table -->
+  <div class="bg-[#2b1f38] p-6 rounded-xl mb-8 shadow-lg overflow-x-auto">
+    <h2 class="text-2xl font-semibold mb-4">Commission Breakdown (50%)</h2>
+
+    <table class="w-full text-left min-w-[720px]">
+      <thead>
+        <tr class="text-sm text-gray-300">
+          <th class="py-2">Plan</th>
+          <th class="py-2">Price</th>
+          <th class="py-2">Affiliate Commission</th>
+          <th class="py-2">Sold (count)</th>
+          <th class="py-2">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody class="text-white">
+        <tr class="border-t border-[#2f2233]">
+          <td class="py-3 font-semibold">Entry</td>
+          <td class="py-3">$19</td>
+          <td class="py-3">$9.50</td>
+          <td class="py-3"><span id="entryCount">0</span></td>
+          <td class="py-3"><span id="entrySubtotal">$0</span></td>
+        </tr>
+
+        <tr class="border-t border-[#2f2233]">
+          <td class="py-3 font-semibold">Pro</td>
+          <td class="py-3">$49</td>
+          <td class="py-3">$24.50</td>
+          <td class="py-3"><span id="proCount">0</span></td>
+          <td class="py-3"><span id="proSubtotal">$0</span></td>
+        </tr>
+
+        <tr class="border-t border-[#2f2233]">
+          <td class="py-3 font-semibold">Diamond</td>
+          <td class="py-3">$449</td>
+          <td class="py-3">$224.50</td>
+          <td class="py-3"><span id="diamondCount">0</span></td>
+          <td class="py-3"><span id="diamondSubtotal">$0</span></td>
+        </tr>
+
+        <tr class="border-t border-[#2f2233]">
+          <td class="py-3 font-semibold">Lifetime</td>
+          <td class="py-3">$999</td>
+          <td class="py-3">$499.50</td>
+          <td class="py-3"><span id="lifetimeCount">0</span></td>
+          <td class="py-3"><span id="lifetimeSubtotal">$0</span></td>
+        </tr>
+      </tbody>
+      <tfoot class="text-white border-t border-[#2f2233]">
+        <tr>
+          <td class="py-3 font-semibold">Totals</td>
+          <td></td>
+          <td></td>
+          <td class="py-3"><span id="totalSold">0</span></td>
+          <td class="py-3"><span id="grandTotal">$0</span></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
   <!-- Bonus Progress -->
   <div class="bg-[#2b1f38] p-6 rounded-xl shadow-lg">
-    <h2 class="text-2xl font-semibold mb-6">Bonus Milestones</h2>
+    <h2 class="text-2xl font-semibold mb-6">Bonus Milestones (Diamond + Lifetime)</h2>
 
     <!-- 50 Sales -->
     <div class="mb-6">
-      <p class="mb-1 font-semibold">50 Sales → $300 Bonus</p>
+      <div class="flex justify-between mb-1">
+        <p class="font-semibold">50 Sales → $300 Bonus</p>
+        <p id="p50Label" class="text-sm opacity-70">0 / 50</p>
+      </div>
       <div class="w-full bg-[#1a1424] rounded-full h-3">
         <div id="p50" class="bg-[#D4AF37] h-3 rounded-full" style="width:0%"></div>
       </div>
@@ -73,7 +141,10 @@
 
     <!-- 100 Sales -->
     <div class="mb-6">
-      <p class="mb-1 font-semibold">100 Sales → $500 Bonus</p>
+      <div class="flex justify-between mb-1">
+        <p class="font-semibold">100 Sales → $500 Bonus</p>
+        <p id="p100Label" class="text-sm opacity-70">0 / 100</p>
+      </div>
       <div class="w-full bg-[#1a1424] rounded-full h-3">
         <div id="p100" class="bg-[#D4AF37] h-3 rounded-full" style="width:0%"></div>
       </div>
@@ -81,10 +152,131 @@
 
     <!-- 200 Sales -->
     <div>
-      <p class="mb-1 font-semibold">200 Sales → $1,000 Bonus</p>
+      <div class="flex justify-between mb-1">
+        <p class="font-semibold">200 Sales → $1,000 Bonus</p>
+        <p id="p200Label" class="text-sm opacity-70">0 / 200</p>
+      </div>
       <div class="w-full bg-[#1a1424] rounded-full h-3">
         <div id="p200" class="bg-[#D4AF37] h-3 rounded-full" style="width:0%"></div>
       </div>
     </div>
   </div>
 </section>
+<script>
+/* ---------- CONFIG (prices & commission rates) ---------- */
+const PRICES = {
+  entry: 19,
+  pro: 49,
+  diamond: 449,
+  lifetime: 999
+};
+const COMMISSION_RATE = 0.5; // 50%
+
+/* ---------- UTILITY ---------- */
+function fmt(n) {
+  return '$' + Number(n).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
+
+/* ---------- COPY REF ---------- */
+function copyRef() {
+  const copyText = document.getElementById("refLink");
+  if (!copyText) return;
+  navigator.clipboard.writeText(copyText.value || '').then(() => {
+    const msg = document.getElementById("copyMsg");
+    msg.classList.remove("opacity-0");
+    setTimeout(() => msg.classList.add("opacity-0"), 1500);
+  });
+}
+
+/* ---------- MAIN UPDATE FUNCTION ----------
+  Call setAffiliateDataFromFirestore(data) with:
+  {
+    referralLink: 'https://kairah.studio?ref=CODE',
+    entryCount: 12,
+    proCount: 5,
+    diamondCount: 18,
+    lifetimeCount: 2,
+    totalReferrals: 37,
+    totalPayouts: 0
+  }
+*/
+function setAffiliateDataFromFirestore(data = {}) {
+  // counts (make sure numbers)
+  const entry = Number(data.entryCount || 0);
+  const pro = Number(data.proCount || 0);
+  const diamond = Number(data.diamondCount || 0);
+  const lifetime = Number(data.lifetimeCount || 0);
+
+  // commission per plan
+  const entryComm = PRICES.entry * COMMISSION_RATE;
+  const proComm = PRICES.pro * COMMISSION_RATE;
+  const diamondComm = PRICES.diamond * COMMISSION_RATE;
+  const lifetimeComm = PRICES.lifetime * COMMISSION_RATE;
+
+  // subtotals
+  const entrySubtotal = entry * entryComm;
+  const proSubtotal = pro * proComm;
+  const diamondSubtotal = diamond * diamondComm;
+  const lifetimeSubtotal = lifetime * lifetimeComm;
+
+  const grandTotal = entrySubtotal + proSubtotal + diamondSubtotal + lifetimeSubtotal;
+
+  // totals
+  const totalSold = entry + pro + diamond + lifetime;
+  const highTier = diamond + lifetime;
+
+  // Set referral link
+  if (data.referralLink) {
+    const refInput = document.getElementById('refLink');
+    refInput.value = data.referralLink;
+  }
+
+  // DOM updates (counts & subtotals)
+  document.getElementById('entryCount').innerText = entry;
+  document.getElementById('proCount').innerText = pro;
+  document.getElementById('diamondCount').innerText = diamond;
+  document.getElementById('lifetimeCount').innerText = lifetime;
+
+  document.getElementById('entrySubtotal').innerText = fmt(entrySubtotal);
+  document.getElementById('proSubtotal').innerText = fmt(proSubtotal);
+  document.getElementById('diamondSubtotal').innerText = fmt(diamondSubtotal);
+  document.getElementById('lifetimeSubtotal').innerText = fmt(lifetimeSubtotal);
+
+  document.getElementById('grandTotal').innerText = fmt(grandTotal);
+  document.getElementById('totalSold').innerText = totalSold;
+  document.getElementById('highTierCount').innerText = highTier;
+
+  // Top stat cards
+  document.getElementById('totalReferrals').innerText = Number(data.totalReferrals || totalSold);
+  document.getElementById('totalCommissions').innerText = fmt(grandTotal);
+  document.getElementById('totalPayouts').innerText = fmt(Number(data.totalPayouts || 0));
+
+  // Bonus progress (50 / 100 / 200)
+  updateProgress('p50', 'p50Label', highTier, 50);
+  updateProgress('p100', 'p100Label', highTier, 100);
+  updateProgress('p200', 'p200Label', highTier, 200);
+}
+
+/* Helper to animate/update progress bars */
+function updateProgress(barId, labelId, current, target) {
+  const percent = Math.min(100, Math.round((current / target) * 100));
+  const w = percent + '%';
+  const bar = document.getElementById(barId);
+  const label = document.getElementById(labelId);
+  if (bar) bar.style.width = w;
+  if (label) label.innerText = `${current} / ${target}`;
+}
+
+/* Example: manual demo (remove/comment out in production) */
+// Demo data — remove this block and call setAffiliateDataFromFirestore(data) from Firebase
+// setAffiliateDataFromFirestore({
+//   referralLink: 'https://kairah.studio?ref=KAIRAH123',
+//   entryCount: 12,
+//   proCount: 7,
+//   diamondCount: 18,
+//   lifetimeCount: 2,
+//   totalReferrals: 39,
+//   totalPayouts: 0
+// });
+
+</script>
