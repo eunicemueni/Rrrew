@@ -292,4 +292,183 @@ onAuthStateChanged(auth, async(user)=>{
 
 </body>
 </html>
+<section id="plans" class="py-16 bg-[#2b1f38]">
+  <h2 class="text-4xl font-bold text-center text-[#D4AF37] mb-12">Plans & Pricing</h2>
+  <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 px-6">
+
+    <!-- Entry Plan -->
+    <div class="bg-[#3D2C41] p-6 rounded-xl text-center shadow-lg hover:scale-[1.03] transition cursor-pointer" onclick="openPaymentModal('Entry')">
+      <h3 class="text-2xl font-bold mb-2">Entry</h3>
+      <p class="mb-4">$19 – Free plan users can generate <span class="font-semibold">1 video up to 6 seconds</span></p>
+      <p class="text-gray-300 text-sm mb-4">
+        Perfect for first-time creators. Generate a short, high-quality cinematic video. Includes:
+        <ul class="text-left list-disc list-inside mt-2">
+          <li>Text-to-video AI generation</li>
+          <li>Photo-to-video transformation</li>
+          <li>Trending templates & basic face swap</li>
+          <li>Limited AI voice customization</li>
+        </ul>
+      </p>
+      <button class="btn mb-2 block w-full">Choose Entry</button>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="bg-[#3D2C41] p-6 rounded-xl text-center shadow-lg hover:scale-[1.03] transition cursor-pointer" onclick="openPaymentModal('Pro')">
+      <h3 class="text-2xl font-bold mb-2">Pro</h3>
+      <p class="mb-4">$49/month – Ideal for regular creators</p>
+      <p class="text-gray-300 text-sm mb-4">
+        Unlock full-length videos, higher resolutions, and advanced features:
+        <ul class="text-left list-disc list-inside mt-2">
+          <li>Unlimited text-to-video generation</li>
+          <li>Photo-to-video with multi-scene AI</li>
+          <li>Face swap & viral template access</li>
+          <li>Custom AI voices with multiple languages</li>
+          <li>Priority generation speed</li>
+        </ul>
+      </p>
+      <button class="btn mb-2 block w-full">Choose Pro</button>
+    </div>
+
+    <!-- Diamond Plan -->
+    <div class="bg-[#3D2C41] p-6 rounded-xl text-center shadow-lg hover:scale-[1.03] transition cursor-pointer" onclick="openPaymentModal('Diamond')">
+      <h3 class="text-2xl font-bold mb-2">Diamond</h3>
+      <p class="mb-4">$449/year – For power users & professionals</p>
+      <p class="text-gray-300 text-sm mb-4">
+        Complete creative freedom. Everything in Pro, plus:
+        <ul class="text-left list-disc list-inside mt-2">
+          <li>Priority AI model access (Hyper-realistic, Cinematic, Fantasy)</li>
+          <li>Commercial usage rights</li>
+          <li>Advanced effects & scene optimization</li>
+          <li>Extended video length: 3 minutes max</li>
+          <li>Dedicated support</li>
+        </ul>
+      </p>
+      <button class="btn mb-2 block w-full">Choose Diamond</button>
+    </div>
+
+    <!-- Lifetime Plan -->
+    <div class="bg-[#3D2C41] p-6 rounded-xl text-center shadow-lg hover:scale-[1.03] transition cursor-pointer" onclick="openPaymentModal('Lifetime')">
+      <h3 class="text-2xl font-bold mb-2">Lifetime</h3>
+      <p class="mb-4">$999 – Full access forever</p>
+      <p class="text-gray-300 text-sm mb-4">
+        Includes everything from Diamond, forever:
+        <ul class="text-left list-disc list-inside mt-2">
+          <li>Unlimited video generation & downloads</li>
+          <li>All AI models unlocked, full resolution</li>
+          <li>Commercial & redistribution rights</li>
+          <li>VIP support & priority updates</li>
+          <li>Exclusive early access to new features</li>
+        </ul>
+      </p>
+      <button class="btn mb-2 block w-full">Choose Lifetime</button>
+    </div>
+
+  </div>
+</section>
+<!-- Payment Modal -->
+<div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
+  <div class="bg-[#3D2C41] p-8 rounded-xl max-w-md w-full">
+    <h3 class="text-2xl font-bold mb-2 text-center text-[#D4AF37]" id="modal-plan-name"></h3>
+    <p class="text-center text-lg text-gray-200 mb-6" id="modal-plan-price"></p>
+
+    <div class="space-y-4">
+
+      <!-- PayPal Button -->
+      <div id="paypal-button-container"></div>
+
+      <!-- Paystack Button -->
+      <button id="paystack-button" class="btn w-full flex justify-center items-center gap-3 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 rounded">
+        <img src="https://images.ctfassets.net/3s5io6mnxfqz/3dcRmIp3eFq8KhYuvtU5oE/7b7ad8f16c3c6f8e91e786e0a03cc8a4/paystack-logo.png" class="h-6" alt="Paystack Logo">
+        Pay with Paystack
+      </button>
+
+      <!-- M-Pesa Button -->
+      <button id="mpesa-button" class="btn w-full flex justify-center items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/M-PESA_logo.png" class="h-6" alt="M-Pesa Logo">
+        Pay with M-Pesa
+      </button>
+
+    </div>
+    <button onclick="closePaymentModal()" class="mt-4 btn w-full bg-gray-700 hover:bg-gray-800 text-white py-2 rounded">Close</button>
+  </div>
+</div>
+
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=BAAQcVUbEKNwGhzFE9Xgg&currency=USD"></script>
+<!-- Paystack SDK -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<script>
+function openPaymentModal(plan) {
+  document.getElementById('payment-modal').classList.remove('hidden');
+  document.getElementById('modal-plan-name').innerText = plan + " Plan";
+
+  const amountUSD = {
+    Entry: 19,
+    Pro: 49,
+    Diamond: 449,
+    Lifetime: 999
+  }[plan];
+
+  document.getElementById('modal-plan-price').innerText = `$${amountUSD} USD`;
+
+  // ---- PayPal ----
+  document.getElementById('paypal-button-container').innerHTML = ''; // Clear previous buttons
+  paypal.Buttons({
+    style: { color: 'gold', shape: 'rect', label: 'pay' },
+    createOrder: (data, actions) => actions.order.create({
+      purchase_units: [{ amount: { value: amountUSD.toString() } }]
+    }),
+    onApprove: (data, actions) => actions.order.capture().then(details => {
+      alert(`PayPal Payment Completed by ${details.payer.name.given_name}`);
+    }),
+    onError: (err) => alert('PayPal Payment Failed: ' + err)
+  }).render('#paypal-button-container');
+
+  // ---- Paystack ----
+  document.getElementById('paystack-button').onclick = function(){
+    var handler = PaystackPop.setup({
+      key: 'pk_live_7ffc2b84bc78834772aa6300d0cc489a06e5df76',
+      email: 'customer@example.com',
+      amount: amountUSD * 100, // in kobo
+      currency: 'USD',
+      callback: function(response){
+        alert('Paystack Payment Successful! Reference: ' + response.reference);
+      },
+      onClose: function(){ alert('Paystack Payment Cancelled'); }
+    });
+    handler.openIframe();
+  }
+
+  // ---- M-Pesa ----
+  document.getElementById('mpesa-button').onclick = function(){
+    const phone = prompt("Enter your M-Pesa phone number (2547XXXXXXXX):");
+    if(phone) {
+      fetch('/mpesa-pay', { // Backend endpoint must handle STK Push
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone: phone,
+          amount: amountUSD,
+          mpesa_number: '0113554446',
+          plan: plan
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.success) {
+          alert('Check your phone to complete the M-Pesa payment!');
+        } else {
+          alert('M-Pesa Payment Failed: ' + data.message);
+        }
+      })
+      .catch(err => alert('M-Pesa Payment Error: ' + err));
+    }
+  }
+}
+
+function closePaymentModal() {
+  document.getElementById('payment-modal').classList.add('hidden');
+}
+</script>
 
