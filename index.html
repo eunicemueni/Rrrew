@@ -14,50 +14,55 @@
   .footer-links a { color: #D4AF37; text-decoration: underline; }
 </style>
 </head>
-<body><section id="signup" class="py-16 max-w-md mx-auto px-6">
-  <h2 class="text-3xl font-bold text-center text-[#D4AF37] mb-8">Sign Up / Login</h2>
-  <div class="bg-[#3D2C41] p-8 rounded-xl shadow-lg">
-    <input type="email" id="email" placeholder="Email" class="w-full p-3 mb-4 rounded text-black">
-    <input type="password" id="password" placeholder="Password" class="w-full p-3 mb-4 rounded text-black">
-    <button id="signup-btn" class="btn w-full mb-2">Sign Up</button>
-    <button id="login-btn" class="btn w-full mb-2">Login</button>
-    <button id="google-login" class="btn w-full mb-2">Sign In with Google</button>
-    <p class="mt-2 text-sm text-center text-[#D4AF37]">Forgot password? <a href="#">Reset here</a></p>
-    <p class="mt-2 text-sm text-center text-[#ff4d6d]">Support: keishapoa@gmail.com</p>
-  </div>
-</section>
-<!-- Place this at the bottom, just before </body> -->
-  <!-- Affiliate Dashboard (Tailwind UI only) -->
-<section class="max-w-6xl mx-auto px-6 py-12">
-  <h1 class="text-4xl font-bold text-[#D4AF37] mb-10">Affiliate Dashboard</h1>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairah Studio Affiliate Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+body { font-family: 'Poppins', sans-serif; background-color: #1a1424; color: white; scroll-behavior: smooth; }
+button { font-weight: 600; transition: all 0.25s; border-radius: 12px; }
+button:hover { transform: scale(1.05); box-shadow: 0 0 20px #D4AF37, 0 0 40px #FFD700; }
+input:focus { outline: none; box-shadow: 0 0 10px #D4AF37; border-color: #FFD700; }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.2) rotate(10deg);opacity:0.8;} }
+.animate-pulse { animation: pulse 1s infinite; }
+</style>
+</head>
+<body>
+
+<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <h1 class="text-3xl sm:text-4xl font-bold text-[#D4AF37] mb-8 sm:mb-10 text-center sm:text-left">Affiliate Dashboard</h1>
 
   <!-- Referral Link -->
   <div class="bg-[#2b1f38] p-6 rounded-xl mb-6 shadow-lg">
     <h2 class="text-2xl font-semibold mb-3">Your Referral Link</h2>
-    <div class="flex items-center gap-3">
-      <input id="refLink" type="text" readonly class="w-full bg-[#1a1424] border border-[#D4AF37] px-4 py-2 rounded-lg" />
-      <button onclick="copyRef()" class="btn">Copy</button>
+    <div class="flex flex-col sm:flex-row items-center gap-3">
+      <input id="refLink" type="text" readonly class="w-full bg-[#1a1424] border border-[#D4AF37] px-4 py-2 rounded-lg mb-2 sm:mb-0" />
+      <button id="copyBtn" onclick="copyRef()" class="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-6 py-2 sm:px-8 sm:py-3 rounded-xl font-bold shadow-lg w-full sm:w-auto">Copy Link</button>
+      <button onclick="shareLink()" class="bg-[#FF4D6D] text-white px-6 py-2 sm:px-8 sm:py-3 rounded-xl font-bold w-full sm:w-auto">Share Link</button>
     </div>
     <p id="copyMsg" class="text-sm text-green-400 mt-2 opacity-0 transition">Copied!</p>
   </div>
 
-  <!-- Top Stats -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+  <!-- Stats -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
     <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
       <p class="text-lg font-semibold mb-1">Total Referrals</p>
       <p id="totalReferrals" class="text-3xl font-bold">0</p>
     </div>
-
     <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
       <p class="text-lg font-semibold mb-1">Total Commissions</p>
       <p id="totalCommissions" class="text-3xl font-bold">$0</p>
     </div>
-
     <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
       <p class="text-lg font-semibold mb-1">Total Payouts</p>
       <p id="totalPayouts" class="text-3xl font-bold">$0</p>
     </div>
-
     <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
       <p class="text-lg font-semibold mb-1">High-Tier Sales</p>
       <p id="highTierCount" class="text-3xl font-bold">0</p>
@@ -65,289 +70,226 @@
     </div>
   </div>
 
-  <!-- Commission Breakdown Table -->
-  <div class="bg-[#2b1f38] p-6 rounded-xl mb-8 shadow-lg overflow-x-auto">
-    <h2 class="text-2xl font-semibold mb-4">Commission Breakdown (50%)</h2>
-
-    <table class="w-full text-left min-w-[720px]">
-      <thead>
-        <tr class="text-sm text-gray-300">
-          <th class="py-2">Plan</th>
-          <th class="py-2">Price</th>
-          <th class="py-2">Affiliate Commission</th>
-          <th class="py-2">Sold (count)</th>
-          <th class="py-2">Subtotal</th>
-        </tr>
-      </thead>
-      <tbody class="text-white">
-        <tr class="border-t border-[#2f2233]">
-          <td class="py-3 font-semibold">Entry</td>
-          <td class="py-3">$19</td>
-          <td class="py-3">$9.50</td>
-          <td class="py-3"><span id="entryCount">0</span></td>
-          <td class="py-3"><span id="entrySubtotal">$0</span></td>
-        </tr>
-
-        <tr class="border-t border-[#2f2233]">
-          <td class="py-3 font-semibold">Pro</td>
-          <td class="py-3">$49</td>
-          <td class="py-3">$24.50</td>
-          <td class="py-3"><span id="proCount">0</span></td>
-          <td class="py-3"><span id="proSubtotal">$0</span></td>
-        </tr>
-
-        <tr class="border-t border-[#2f2233]">
-          <td class="py-3 font-semibold">Diamond</td>
-          <td class="py-3">$449</td>
-          <td class="py-3">$224.50</td>
-          <td class="py-3"><span id="diamondCount">0</span></td>
-          <td class="py-3"><span id="diamondSubtotal">$0</span></td>
-        </tr>
-
-        <tr class="border-t border-[#2f2233]">
-          <td class="py-3 font-semibold">Lifetime</td>
-          <td class="py-3">$999</td>
-          <td class="py-3">$499.50</td>
-          <td class="py-3"><span id="lifetimeCount">0</span></td>
-          <td class="py-3"><span id="lifetimeSubtotal">$0</span></td>
-        </tr>
-      </tbody>
-      <tfoot class="text-white border-t border-[#2f2233]">
-        <tr>
-          <td class="py-3 font-semibold">Totals</td>
-          <td></td>
-          <td></td>
-          <td class="py-3"><span id="totalSold">0</span></td>
-          <td class="py-3"><span id="grandTotal">$0</span></td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-
   <!-- Bonus Progress -->
-  <div class="bg-[#2b1f38] p-6 rounded-xl shadow-lg">
-    <h2 class="text-2xl font-semibold mb-6">Bonus Milestones (Diamond + Lifetime)</h2>
+  <div class="bg-[#2b1f38] p-4 sm:p-6 rounded-xl shadow-lg mb-10">
+    <h2 class="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Bonus Milestones (Diamond + Lifetime)</h2>
 
-    <!-- 50 Sales -->
-    <div class="mb-6">
+    <div class="mb-4">
       <div class="flex justify-between mb-1">
         <p class="font-semibold">50 Sales → $300 Bonus</p>
         <p id="p50Label" class="text-sm opacity-70">0 / 50</p>
       </div>
-      <div class="w-full bg-[#1a1424] rounded-full h-3">
-        <div id="p50" class="bg-[#D4AF37] h-3 rounded-full" style="width:0%"></div>
+      <div class="w-full bg-[#1a1424] rounded-full h-3 sm:h-4">
+        <div id="p50" class="bg-[#D4AF37] h-3 sm:h-4 rounded-full" style="width:0%"></div>
       </div>
     </div>
 
-    <!-- 100 Sales -->
-    <div class="mb-6">
+    <div class="mb-4">
       <div class="flex justify-between mb-1">
         <p class="font-semibold">100 Sales → $500 Bonus</p>
         <p id="p100Label" class="text-sm opacity-70">0 / 100</p>
       </div>
-      <div class="w-full bg-[#1a1424] rounded-full h-3">
-        <div id="p100" class="bg-[#D4AF37] h-3 rounded-full" style="width:0%"></div>
+      <div class="w-full bg-[#1a1424] rounded-full h-3 sm:h-4">
+        <div id="p100" class="bg-[#D4AF37] h-3 sm:h-4 rounded-full" style="width:0%"></div>
       </div>
     </div>
 
-    <!-- 200 Sales -->
     <div>
       <div class="flex justify-between mb-1">
         <p class="font-semibold">200 Sales → $1,000 Bonus</p>
         <p id="p200Label" class="text-sm opacity-70">0 / 200</p>
       </div>
-      <div class="w-full bg-[#1a1424] rounded-full h-3">
-        <div id="p200" class="bg-[#D4AF37] h-3 rounded-full" style="width:0%"></div>
+      <div class="w-full bg-[#1a1424] rounded-full h-3 sm:h-4">
+        <div id="p200" class="bg-[#D4AF37] h-3 sm:h-4 rounded-full" style="width:0%"></div>
       </div>
     </div>
   </div>
+
+  <!-- Leaderboard -->
+  <div class="bg-[#2b1f38] p-4 sm:p-6 rounded-xl shadow-lg mb-6">
+    <h2 class="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Top Affiliates</h2>
+    <div id="leaderboard" class="space-y-2 sm:space-y-4">
+      <p class="text-sm opacity-50">Loading leaderboard...</p>
+    </div>
+  </div>
+
+  <!-- Download Button -->
+  <div class="flex justify-center sm:justify-end mt-4 sm:mt-6">
+    <button id="downloadBtn" class="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-black px-6 py-2 sm:px-8 sm:py-3 rounded-xl font-bold shadow-lg hover:scale-105 hover:shadow-[0_0_25px_#D4AF37] transition-all duration-300 w-full sm:w-auto" onclick="downloadReport()">Download Commission Report</button>
+  </div>
 </section>
-<script>
-/* ---------- CONFIG (prices & commission rates) ---------- */
-const PRICES = {
-  entry: 19,
-  pro: 49,
-  diamond: 449,
-  lifetime: 999
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, getDoc, query, where, getDocs, onSnapshot, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+// ---- FIREBASE CONFIG ----
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
 };
-const COMMISSION_RATE = 0.5; // 50%
-
-/* ---------- UTILITY ---------- */
-function fmt(n) {
-  return '$' + Number(n).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-}
-
-/* ---------- COPY REF ---------- */
-function copyRef() {
-  const copyText = document.getElementById("refLink");
-  if (!copyText) return;
-  navigator.clipboard.writeText(copyText.value || '').then(() => {
-    const msg = document.getElementById("copyMsg");
-    msg.classList.remove("opacity-0");
-    setTimeout(() => msg.classList.add("opacity-0"), 1500);
-  });
-}
-
-/* ---------- MAIN UPDATE FUNCTION ----------
-  Call setAffiliateDataFromFirestore(data) with:
-  {
-    referralLink: 'https://kairah.studio?ref=CODE',
-    entryCount: 12,
-    proCount: 5,
-    diamondCount: 18,
-    lifetimeCount: 2,
-    totalReferrals: 37,
-    totalPayouts: 0
-  }
-*/
-function setAffiliateDataFromFirestore(data = {}) {
-  // counts (make sure numbers)
-  const entry = Number(data.entryCount || 0);
-  const pro = Number(data.proCount || 0);
-  const diamond = Number(data.diamondCount || 0);
-  const lifetime = Number(data.lifetimeCount || 0);
-
-  // commission per plan
-  const entryComm = PRICES.entry * COMMISSION_RATE;
-  const proComm = PRICES.pro * COMMISSION_RATE;
-  const diamondComm = PRICES.diamond * COMMISSION_RATE;
-  const lifetimeComm = PRICES.lifetime * COMMISSION_RATE;
-
-  // subtotals
-  const entrySubtotal = entry * entryComm;
-  const proSubtotal = pro * proComm;
-  const diamondSubtotal = diamond * diamondComm;
-  const lifetimeSubtotal = lifetime * lifetimeComm;
-
-  const grandTotal = entrySubtotal + proSubtotal + diamondSubtotal + lifetimeSubtotal;
-
-  // totals
-  const totalSold = entry + pro + diamond + lifetime;
-  const highTier = diamond + lifetime;
-
-  // Set referral link
-  if (data.referralLink) {
-    const refInput = document.getElementById('refLink');
-    refInput.value = data.referralLink;
-  }
-
-  // DOM updates (counts & subtotals)
-  document.getElementById('entryCount').innerText = entry;
-  document.getElementById('proCount').innerText = pro;
-  document.getElementById('diamondCount').innerText = diamond;
-  document.getElementById('lifetimeCount').innerText = lifetime;
-
-  document.getElementById('entrySubtotal').innerText = fmt(entrySubtotal);
-  document.getElementById('proSubtotal').innerText = fmt(proSubtotal);
-  document.getElementById('diamondSubtotal').innerText = fmt(diamondSubtotal);
-  document.getElementById('lifetimeSubtotal').innerText = fmt(lifetimeSubtotal);
-
-  document.getElementById('grandTotal').innerText = fmt(grandTotal);
-  document.getElementById('totalSold').innerText = totalSold;
-  document.getElementById('highTierCount').innerText = highTier;
-
-  // Top stat cards
-  document.getElementById('totalReferrals').innerText = Number(data.totalReferrals || totalSold);
-  document.getElementById('totalCommissions').innerText = fmt(grandTotal);
-  document.getElementById('totalPayouts').innerText = fmt(Number(data.totalPayouts || 0));
-
-  // Bonus progress (50 / 100 / 200)
-  updateProgress('p50', 'p50Label', highTier, 50);
-  updateProgress('p100', 'p100Label', highTier, 100);
-  updateProgress('p200', 'p200Label', highTier, 200);
-}
-
-/* Helper to animate/update progress bars */
-function updateProgress(barId, labelId, current, target) {
-  const percent = Math.min(100, Math.round((current / target) * 100));
-  const w = percent + '%';
-  const bar = document.getElementById(barId);
-  const label = document.getElementById(labelId);
-  if (bar) bar.style.width = w;
-  if (label) label.innerText = `${current} / ${target}`;
-}
-
-/* Example: manual demo (remove/comment out in production) */
-// Demo data — remove this block and call setAffiliateDataFromFirestore(data) from Firebase
-// setAffiliateDataFromFirestore({
-//   referralLink: 'https://kairah.studio?ref=KAIRAH123',
-//   entryCount: 12,
-//   proCount: 7,
-//   diamondCount: 18,
-//   lifetimeCount: 2,
-//   totalReferrals: 39,
-//   totalPayouts: 0
-// });
-
-</script>
-  // Import Firebase modules
-import { getFirestore, collection, doc, setDoc, getDoc, query, where, getDocs, addDoc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-// Initialize Firestore
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Initialize Auth
-const auth = getAuth(app);
-async function createReferralCode(userId) {
-  const code = "KAI" + Math.random().toString(36).substring(2, 8).toUpperCase();
-  await setDoc(doc(db, "users", userId), {
-    referralCode: code,
-    referredBy: null, // will set if they used a referral link
-    createdAt: serverTimestamp()
-  }, { merge: true });
+// ----- Copy & Share -----
+window.copyRef = function(){
+  const refInput = document.getElementById('refLink');
+  refInput.select();
+  navigator.clipboard.writeText(refInput.value);
+  const msg = document.getElementById('copyMsg');
+  msg.classList.remove('opacity-0');
+  setTimeout(()=>msg.classList.add('opacity-0'),1500);
+}
+window.shareLink = function(){
+  const link = document.getElementById('refLink').value;
+  if(navigator.share) navigator.share({title:'Join Kairah Studio',url:link});
+  else alert("Copy this link to share: "+link);
+}
 
+// ----- Create Referral Code -----
+async function createReferralCode(userId){
+  const code = "KAI"+Math.random().toString(36).substring(2,8).toUpperCase();
+  await setDoc(doc(db,"users",userId),{ referralCode: code, referredBy: null, createdAt: serverTimestamp(), totalCommissions:0, totalReferrals:0 },{ merge:true });
   return code;
 }
-async function setReferredBy(userId, refCode) {
-  // Find affiliate user by referralCode
-  const q = query(collection(db, "users"), where("referralCode", "==", refCode));
-  const querySnapshot = await getDocs(q);
-  if (!querySnapshot.empty) {
-    const affiliateDoc = querySnapshot.docs[0];
-    await updateDoc(doc(db, "users", userId), {
-      referredBy: affiliateDoc.id
-    });
-    console.log("User referred by:", affiliateDoc.id);
+
+// ----- Animate Counters -----
+function animateCounter(id,value){
+  let count=0;
+  const increment = Math.ceil(value/50);
+  const el=document.getElementById(id);
+  const interval=setInterval(()=>{
+    count+=increment;
+    if(count>=value){count=value; clearInterval(interval);}
+    el.innerText = id==='totalCommissions'||id==='totalPayouts'?"$"+count:count;
+  },20);
+}
+
+// ----- Animate Bonus Bars -----
+function animateBar(id,targetPercent){
+  let width=0;
+  const bar=document.getElementById(id);
+  const interval=setInterval(()=>{
+    width++;
+    if(width>=targetPercent){width=targetPercent; clearInterval(interval);}
+    bar.style.width=width+'%';
+  },10);
+}
+
+// ----- Confetti -----
+const celebratedMilestones={50:false,100:false,200:false};
+function triggerBonusConfetti(current,target){
+  if(current>=target && !celebratedMilestones[target]){
+    celebratedMilestones[target]=true;
+    confetti({ particleCount:250, spread:90, origin:{y:0.6}, colors:['#D4AF37','#FFD700','#FF4D6D'], scalar:1.2 });
   }
 }
-async function logSale(buyerId, plan) {
-  const userDoc = await getDoc(doc(db, "users", buyerId));
-  if (!userDoc.exists()) return;
 
-  const buyerData = userDoc.data();
-  const affiliateId = buyerData.referredBy;
-  if (!affiliateId) return; // No affiliate
+// ----- Update Dashboard -----
+function updateAffiliateDashboard(data){
+  document.getElementById('refLink').value="https://kairah.studio?ref="+data.referralCode;
+  animateCounter('totalReferrals',data.totalReferrals||0);
+  animateCounter('totalCommissions',data.totalCommissions||0);
+  animateCounter('totalPayouts',data.totalPayouts||0);
+  animateCounter('highTierCount',data.highTier||0);
 
-  // Commission calculation
-  const prices = { entry: 19, pro: 49, diamond: 449, lifetime: 999 };
-  const commission = (prices[plan.toLowerCase()] || 0) * 0.5;
+  const bonuses=[
+    {id:'p50',label:'p50Label',target:50},
+    {id:'p100',label:'p100Label',target:100},
+    {id:'p200',label:'p200Label',target:200}
+  ];
+  bonuses.forEach(b=>{
+    const percent=Math.min(100,Math.round(((data.highTier||0)/b.target)*100));
+    animateBar(b.id,percent);
+    document.getElementById(b.label).innerText=(data.highTier||0)+' / '+b.target;
+    triggerBonusConfetti(data.highTier||0,b.target);
+  });
+}
 
-  await addDoc(collection(db, "sales"), {
-    buyerID: buyerId,
-    affiliateID: affiliateId,
-    plan: plan,
-    commissionAmount: commission,
-    timestamp: serverTimestamp()
+// ----- Leaderboard -----
+async function updateLeaderboard(){
+  const leaderboardEl=document.getElementById('leaderboard');
+  leaderboardEl.innerHTML="<p class='text-sm opacity-50'>Loading leaderboard...</p>";
+
+  const usersSnap=await getDocs(collection(db,"users"));
+  const affiliates=[];
+  usersSnap.forEach(doc=>{
+    const data=doc.data();
+    if(data.referralCode && data.totalCommissions) affiliates.push({name:data.name||data.referralCode,total:data.totalCommissions});
+  });
+  affiliates.sort((a,b)=>b.total-a.total);
+  leaderboardEl.innerHTML="";
+  const medals=['🥇','🥈','🥉'];
+  affiliates.slice(0,10).forEach((a,i)=>{
+    const p=document.createElement("p");
+    p.className="text-white font-medium flex items-center gap-2";
+    const medalSpan=document.createElement("span");
+    medalSpan.innerText=medals[i]||'';
+    if(i<3) medalSpan.className="animate-pulse";
+    const nameSpan=document.createElement("span");
+    nameSpan.innerHTML=`${i+1}. ${a.name} — $${a.total}`;
+    p.appendChild(medalSpan);
+    p.appendChild(nameSpan);
+    leaderboardEl.appendChild(p);
+  });
+}
+
+// ----- Download Commission Report -----
+window.downloadReport = async function(){
+  const user=auth.currentUser;
+  if(!user) return alert("You must be logged in to download your report.");
+  const salesSnapshot = await getDocs(query(collection(db,"sales"), where("affiliateID","==",user.uid)));
+  if(salesSnapshot.empty) return alert("No sales yet to generate report.");
+
+  let csvContent="data:text/csv;charset=utf-8,";
+  csvContent+="Date,Plan,Commission ($)\n";
+  salesSnapshot.forEach(doc=>{
+    const data=doc.data();
+    const date = data.createdAt?.toDate ? data.createdAt.toDate().toLocaleDateString() : "N/A";
+    csvContent += `${date},${data.plan},${data.commissionAmount}\n`;
   });
 
-  console.log(`Sale logged for ${plan}, commission $${commission}`);
+  const encodedUri=encodeURI(csvContent);
+  const link=document.createElement("a");
+  link.setAttribute("href",encodedUri);
+  link.setAttribute("download", `Kairah_Studio_Commission_Report_${new Date().toLocaleDateString()}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
-async function getAffiliateStats(affiliateId) {
-  const salesSnapshot = await getDocs(query(collection(db, "sales"), where("affiliateID", "==", affiliateId)));
 
-  let entry = 0, pro = 0, diamond = 0, lifetime = 0, totalCommission = 0;
+// ----- Real-time Update -----
+onAuthStateChanged(auth, async(user)=>{
+  if(!user) return;
+  const userRef=doc(db,"users",user.uid);
+  const userSnap=await getDoc(userRef);
+  let code=userSnap.data()?.referralCode;
+  if(!code) code=await createReferralCode(user.uid);
 
-  salesSnapshot.forEach(doc => {
-    const data = doc.data();
-    totalCommission += data.commissionAmount;
-    switch(data.plan.toLowerCase()) {
-      case "entry": entry++; break;
-      case "pro": pro++; break;
-      case "diamond": diamond++; break;
-      case "lifetime": lifetime++; break;
-    }
+  // Real-time listener for commissions
+  onSnapshot(userRef, snapshot=>{
+    const data = snapshot.data();
+    updateAffiliateDashboard({
+      referralCode: data.referralCode,
+      totalReferrals: data.totalReferrals,
+      totalCommissions: data.totalCommissions,
+      totalPayouts: 0,
+      highTier: data.highTier || 0
+    });
   });
 
-  return { entry, pro, diamond, lifetime, totalCommission, highTier: diamond + lifetime };
-}
+  updateLeaderboard();
+  setInterval(updateLeaderboard,10000);
+});
+</script>
+
+</body>
+</html>
+
