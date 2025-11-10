@@ -1,0 +1,90 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<style>
+  body { font-family: 'Poppins', sans-serif; background-color: #1a1424; color: white; scroll-behavior: smooth; }
+  .btn { background-color: #D4AF37; color: black; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; transition: all 0.2s; cursor: pointer; display: inline-block; text-align: center; }
+  .btn:hover { transform: scale(1.05); box-shadow: 0 0 20px #D4AF37; }
+  .video-slide { max-width: 100%; border-radius: 0.5rem; box-shadow: 0 0 20px #000; }
+  .discount-badge { background-color: #ff4d6d; color: white; padding: 0.2rem 0.5rem; font-size: 0.8rem; border-radius: 0.3rem; margin-left: 0.5rem; }
+  .faq-question { font-weight: bold; margin-top: 1rem; }
+  .footer-links a { color: #D4AF37; text-decoration: underline; }
+</style>
+</head>
+<body><section id="signup" class="py-16 max-w-md mx-auto px-6">
+  <h2 class="text-3xl font-bold text-center text-[#D4AF37] mb-8">Sign Up / Login</h2>
+  <div class="bg-[#3D2C41] p-8 rounded-xl shadow-lg">
+    <input type="email" id="email" placeholder="Email" class="w-full p-3 mb-4 rounded text-black">
+    <input type="password" id="password" placeholder="Password" class="w-full p-3 mb-4 rounded text-black">
+    <button id="signup-btn" class="btn w-full mb-2">Sign Up</button>
+    <button id="login-btn" class="btn w-full mb-2">Login</button>
+    <button id="google-login" class="btn w-full mb-2">Sign In with Google</button>
+    <p class="mt-2 text-sm text-center text-[#D4AF37]">Forgot password? <a href="#">Reset here</a></p>
+    <p class="mt-2 text-sm text-center text-[#ff4d6d]">Support: keishapoa@gmail.com</p>
+  </div>
+</section>
+<!-- Place this at the bottom, just before </body> -->
+  <section class="max-w-6xl mx-auto px-6 py-12">
+  <h1 class="text-4xl font-bold text-[#D4AF37] mb-10">Affiliate Dashboard</h1>
+
+  <!-- Referral Link -->
+  <div class="bg-[#2b1f38] p-6 rounded-xl mb-10 shadow-lg">
+    <h2 class="text-2xl font-semibold mb-3">Your Referral Link</h2>
+    <div class="flex items-center gap-3">
+      <input id="refLink" type="text" readonly class="w-full bg-[#1a1424] border border-[#D4AF37] px-4 py-2 rounded-lg" />
+      <button onclick="copyRef()" class="btn">Copy</button>
+    </div>
+    <p id="copyMsg" class="text-sm text-green-400 mt-2 opacity-0 transition">Copied!</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+    <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
+      <p class="text-lg font-semibold mb-1">Total Referrals</p>
+      <p id="totalReferrals" class="text-4xl font-bold">0</p>
+    </div>
+
+    <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
+      <p class="text-lg font-semibold mb-1">Total Earnings</p>
+      <p id="totalEarnings" class="text-4xl font-bold">$0</p>
+    </div>
+
+    <div class="bg-[#2b1f38] p-6 rounded-xl text-center shadow-lg">
+      <p class="text-lg font-semibold mb-1">High-Tier Sales</p>
+      <p id="highTierCount" class="text-4xl font-bold">0</p>
+      <p class="text-sm opacity-70">(Diamond + Lifetime)</p>
+    </div>
+  </div>
+
+  <!-- Bonus Progress -->
+  <div class="bg-[#2b1f38] p-6 rounded-xl shadow-lg">
+    <h2 class="text-2xl font-semibold mb-6">Bonus Milestones</h2>
+
+    <!-- 50 Sales -->
+    <div class="mb-6">
+      <p class="mb-1 font-semibold">50 Sales → $300 Bonus</p>
+      <div class="w-full bg-[#1a1424] rounded-full h-3">
+        <div id="p50" class="bg-[#D4AF37] h-3 rounded-full" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- 100 Sales -->
+    <div class="mb-6">
+      <p class="mb-1 font-semibold">100 Sales → $500 Bonus</p>
+      <div class="w-full bg-[#1a1424] rounded-full h-3">
+        <div id="p100" class="bg-[#D4AF37] h-3 rounded-full" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- 200 Sales -->
+    <div>
+      <p class="mb-1 font-semibold">200 Sales → $1,000 Bonus</p>
+      <div class="w-full bg-[#1a1424] rounded-full h-3">
+        <div id="p200" class="bg-[#D4AF37] h-3 rounded-full" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+</section>
