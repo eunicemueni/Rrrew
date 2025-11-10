@@ -299,4 +299,55 @@ async function createReferralCode(userId) {
 
   return code;
 }
+async function setReferredBy(userId, refCode) {
+  // Find affiliate user by referralCode
+  const q = query(collection(db, "users"), where("referralCode", "==", refCode));
+  const querySnapshot = await getDocs(q);
+  if (!querySnapshot.empty) {
+    const affiliateDoc = querySnapshot.docs[0];
+    await updateDoc(doc(db, "users", userId), {
+      referredBy: affiliateDoc.id
+    });
+    console.log("User referred by:", affiliateDoc.id);
+  }
+}
+async function logSale(buyerId, plan) {
+  const userDoc = await getDoc(doc(db, "users", buyerId));
+  if (!userDoc.exists()) return;
 
+  const buyerData = userDoc.data();
+  const affiliateId = buyerData.referredBy;
+  if (!affiliateId) return; // No affiliate
+
+  // Commission calculation
+  const prices = { entry: 19, pro: 49, diamond: 449, lifetime: 999 };
+  const commission = (prices[plan.toLowerCase()] || 0) * 0.5;
+
+  await addDoc(collection(db, "sales"), {
+    buyerID: buyerId,
+    affiliateID: affiliateId,
+    plan: plan,
+    commissionAmount: commission,
+    timestamp: serverTimestamp()
+  });
+
+  console.log(`Sale logged for ${plan}, commission $${commission}`);
+}
+async function getAffiliateStats(affiliateId) {
+  const salesSnapshot = await getDocs(query(collection(db, "sales"), where("affiliateID", "==", affiliateId)));
+
+  let entry = 0, pro = 0, diamond = 0, lifetime = 0, totalCommission = 0;
+
+  salesSnapshot.forEach(doc => {
+    const data = doc.data();
+    totalCommission += data.commissionAmount;
+    switch(data.plan.toLowerCase()) {
+      case "entry": entry++; break;
+      case "pro": pro++; break;
+      case "diamond": diamond++; break;
+      case "lifetime": lifetime++; break;
+    }
+  });
+
+  return { entry, pro, diamond, lifetime, totalCommission, highTier: diamond + lifetime };
+}
