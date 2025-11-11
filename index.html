@@ -318,23 +318,28 @@ onAuthStateChanged(auth, async(user)=>{
 
     <div class="flex flex-col gap-3 mb-4">
 
-      <!-- Credit Card / M-Pesa / Paystack / PayPal Buttons -->
-      <a href="https://paystack.shop/pay/4u6jdu7eft" target="_blank" class="flex items-center justify-center gap-2 bg-indigo-600 px-4 py-2 rounded text-white">
-        <img src="https://seeklogo.com/images/P/paystack-logo-1B9F0FA120-seeklogo.com.png" class="h-5"> Pay with Paystack
+      <!-- Paystack -->
+      <a href="https://paystack.shop/pay/4u6jdu7eft" target="_blank"
+         class="flex items-center justify-center gap-2 bg-indigo-600 px-4 py-2 rounded text-white">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/01/Paystack_Logo.png" class="h-5" alt="Paystack"> Pay with Paystack
       </a>
 
-      <a href="https://www.paypal.com/ncp/payment/S77ESJWSU79JU" target="_blank" class="flex items-center justify-center gap-2 bg-yellow-400 px-4 py-2 rounded text-black">
-        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" class="h-5"> Pay with PayPal
+      <!-- PayPal -->
+      <a href="https://www.paypal.com/ncp/payment/S77ESJWSU79JU" target="_blank"
+         class="flex items-center justify-center gap-2 bg-yellow-400 px-4 py-2 rounded text-black">
+        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" class="h-5" alt="PayPal"> Pay with PayPal
       </a>
 
-      <a href="tel:+25411355446" class="flex items-center justify-center gap-2 bg-green-600 px-4 py-2 rounded text-white">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/M-PESA_logo.png" class="h-5"> Pay with M-Pesa
-      </a>
+      <!-- M-PESA (manual number) -->
+      <div class="flex items-center justify-center gap-2 bg-green-600 px-4 py-2 rounded text-white">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/M-PESA_logo.png" class="h-5" alt="M-PESA"> Pay with M-PESA: 0113554446
+      </div>
 
+      <!-- Credit Card logos -->
       <button class="flex items-center justify-center gap-2 bg-gray-600 px-4 py-2 rounded text-white">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" class="h-5">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" class="h-5">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg" class="h-5">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" class="h-5" alt="Visa">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Mastercard_logo.png" class="h-5" alt="Mastercard">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg" class="h-5" alt="Amex">
         Credit Card
       </button>
 
@@ -345,11 +350,10 @@ onAuthStateChanged(auth, async(user)=>{
 </div>
 
 <script>
-document.getElementById('diamond-pay-btn').onclick = () => {
-  document.getElementById('diamond-checkout-modal').classList.remove('hidden');
-};
+  const payBtn = document.getElementById('diamond-pay-btn');
+  const modal = document.getElementById('diamond-checkout-modal');
+  const closeBtn = document.getElementById('diamond-close');
 
-document.getElementById('diamond-close').onclick = () => {
-  document.getElementById('diamond-checkout-modal').classList.add('hidden');
-};
+  payBtn.onclick = () => modal.classList.remove('hidden');
+  closeBtn.onclick = () => modal.classList.add('hidden');
 </script>
