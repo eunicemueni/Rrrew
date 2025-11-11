@@ -289,7 +289,7 @@ onAuthStateChanged(auth, async(user)=>{
   setInterval(updateLeaderboard,10000);
 });
 </script>
-      <!-- Diamond Plan Card -->
+<!-- Diamond Plan Card -->
 <div class="plan-card bg-[#3D2C41] p-6 rounded-xl text-center shadow-lg max-w-md mx-auto">
   <h3 class="text-2xl font-bold mb-2">Diamond</h3>
   <p class="mb-2 text-lg font-semibold">$499</p>
@@ -319,23 +319,30 @@ onAuthStateChanged(auth, async(user)=>{
 
     <!-- Payment options -->
     <div class="flex flex-col gap-3 mb-4">
+      <!-- Credit Card -->
       <button id="checkout-cc" class="bg-gray-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" class="h-5"> 
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Mastercard-logo.svg" class="h-5">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" class="h-5">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" class="h-5">
         <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg" class="h-5">
         Pay with Credit Card
       </button>
 
+      <!-- PayPal -->
       <button id="checkout-paypal" class="bg-yellow-400 text-black px-4 py-2 rounded flex items-center justify-center gap-2">
-        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" class="h-5"> Pay with PayPal
+        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" class="h-5">
+        Pay with PayPal
       </button>
 
+      <!-- Paystack -->
       <button id="checkout-paystack" class="bg-indigo-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2">
-        <img src="https://seeklogo.com/images/P/paystack-logo-1B9F0FA120-seeklogo.com.png" class="h-5"> Pay with Paystack
+        <img src="https://seeklogo.com/images/P/paystack-logo-1B9F0FA120-seeklogo.com.png" class="h-5">
+        Pay with Paystack
       </button>
 
+      <!-- M-Pesa -->
       <button id="checkout-mpesa" class="bg-green-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/M-PESA_logo.png" class="h-5"> Pay with M-Pesa
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/M-PESA_logo.png" class="h-5">
+        Pay with M-Pesa
       </button>
     </div>
 
@@ -349,16 +356,16 @@ onAuthStateChanged(auth, async(user)=>{
 <script>
 const planPrices = { Diamond: 499 };
 
+// Open checkout modal
 document.querySelectorAll('.pay-now-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const plan = btn.dataset.plan;
     const modal = document.getElementById('checkout-modal');
     document.getElementById('checkout-plan-name').innerText = plan;
     document.getElementById('checkout-plan-price').innerText = `$${planPrices[plan]}`;
-
     modal.classList.remove('hidden');
 
-    // Credit Card button (integrate your card processor here)
+    // Credit Card placeholder
     document.getElementById('checkout-cc').onclick = () => {
       alert('Credit Card payment flow would open here');
     };
