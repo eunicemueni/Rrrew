@@ -303,14 +303,14 @@ onAuthStateChanged(auth, async(user)=>{
     <li>Dedicated support</li>
   </ul>
 
-  <button id="diamond-pay-btn" class="w-full py-2 bg-[#D4AF37] hover:bg-yellow-400 text-black font-bold">Pay Now</button>
+  <button id="diamond-pay-btn" class="w-full py-3 bg-[#D4AF37] hover:bg-yellow-400 text-black font-bold rounded-lg">Pay Now</button>
 </div>
 
 <!-- Checkout Modal -->
 <div id="diamond-checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
   <div class="bg-[#3D2C41] p-6 rounded-xl w-96 text-white">
     <h2 class="text-2xl font-bold mb-2">Diamond Checkout</h2>
-    <p class="mb-4">$499</p>
+    <p class="mb-4 text-lg font-semibold">$499</p>
 
     <!-- Email input -->
     <label class="block mb-2">Contact Email</label>
@@ -320,32 +320,33 @@ onAuthStateChanged(auth, async(user)=>{
 
       <!-- Paystack -->
       <a href="https://paystack.shop/pay/4u6jdu7eft" target="_blank"
-         class="flex items-center justify-center gap-2 bg-indigo-600 px-4 py-2 rounded text-white">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/01/Paystack_Logo.png" class="h-5" alt="Paystack"> Pay with Paystack
+         class="flex items-center justify-center gap-3 bg-indigo-600 px-4 py-3 rounded-lg text-white">
+        <img src="https://streamable.com/kkvwg9" class="h-6 w-6 object-contain" alt="Paystack"> 
+        <span class="font-semibold">Pay with Paystack</span>
       </a>
 
       <!-- PayPal -->
       <a href="https://www.paypal.com/ncp/payment/S77ESJWSU79JU" target="_blank"
-         class="flex items-center justify-center gap-2 bg-yellow-400 px-4 py-2 rounded text-black">
-        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" class="h-5" alt="PayPal"> Pay with PayPal
+         class="flex items-center justify-center gap-3 bg-yellow-400 px-4 py-3 rounded-lg text-black">
+        <img src="https://streamable.com/4s6alj" class="h-6 w-6 object-contain" alt="PayPal"> 
+        <span class="font-semibold">Pay with PayPal</span>
       </a>
 
       <!-- M-PESA (manual number) -->
-      <div class="flex items-center justify-center gap-2 bg-green-600 px-4 py-2 rounded text-white">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/M-PESA_logo.png" class="h-5" alt="M-PESA"> Pay with M-PESA: 0113554446
+      <div class="flex items-center justify-center gap-3 bg-green-600 px-4 py-3 rounded-lg text-white">
+        <img src="https://streamable.com/v2q2hf" class="h-6 w-6 object-contain" alt="M-PESA"> 
+        <span class="font-semibold">Pay with M-PESA: 0113554446</span>
       </div>
 
       <!-- Credit Card logos -->
-      <button class="flex items-center justify-center gap-2 bg-gray-600 px-4 py-2 rounded text-white">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" class="h-5" alt="Visa">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Mastercard_logo.png" class="h-5" alt="Mastercard">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg" class="h-5" alt="Amex">
-        Credit Card
+      <button class="flex items-center justify-center gap-2 bg-gray-600 px-4 py-3 rounded-lg text-white">
+        <img src="https://streamable.com/av6odz" class="h-6 w-6 object-contain" alt="Credit Card"> 
+        <span class="font-semibold">Credit Card</span>
       </button>
 
     </div>
 
-    <button id="diamond-close" class="w-full py-2 bg-gray-500 rounded">Cancel</button>
+    <button id="diamond-close" class="w-full py-3 bg-gray-500 rounded-lg mt-2">Cancel</button>
   </div>
 </div>
 
