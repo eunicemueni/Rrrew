@@ -289,12 +289,11 @@ onAuthStateChanged(auth, async(user)=>{
   setInterval(updateLeaderboard,10000);
 });
 </script>
-<!-- Diamond Plan Card -->
+   <!-- Diamond Plan Card -->
 <div class="plan-card bg-[#3D2C41] p-6 rounded-xl text-center shadow-lg max-w-md mx-auto">
   <h3 class="text-2xl font-bold mb-2">Diamond</h3>
   <p class="mb-2 text-lg font-semibold">$499</p>
 
-  <!-- Detailed description -->
   <ul class="text-left list-disc list-inside text-gray-300 mb-4">
     <li>Everything in Pro</li>
     <li>Priority AI model access (Hyper-realistic, Cinematic, Fantasy)</li>
@@ -304,49 +303,40 @@ onAuthStateChanged(auth, async(user)=>{
     <li>Dedicated support</li>
   </ul>
 
-  <button class="btn w-full py-2 mb-2 bg-[#D4AF37] hover:bg-yellow-400 text-black font-bold pay-now-btn" data-plan="Diamond">Pay Now</button>
+  <button id="diamond-pay-btn" class="w-full py-2 bg-[#D4AF37] hover:bg-yellow-400 text-black font-bold">Pay Now</button>
 </div>
 
 <!-- Checkout Modal -->
-<div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+<div id="diamond-checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
   <div class="bg-[#3D2C41] p-6 rounded-xl w-96 text-white">
-    <h2 class="text-2xl font-bold mb-4" id="checkout-plan-name">Diamond</h2>
-    <p class="mb-4" id="checkout-plan-price">$499</p>
+    <h2 class="text-2xl font-bold mb-2">Diamond</h2>
+    <p class="mb-4">$499</p>
 
-    <!-- Email input -->
     <label class="block mb-2">Contact Email</label>
-    <input type="email" id="checkout-email" class="w-full p-2 mb-4 rounded text-black" placeholder="you@example.com">
+    <input type="email" id="diamond-email" class="w-full p-2 mb-4 rounded text-black" placeholder="you@example.com">
 
-    <!-- Payment options -->
     <div class="flex flex-col gap-3 mb-4">
-      <!-- Credit Card -->
-      <button id="checkout-cc" class="bg-gray-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2">
+      <button id="diamond-cc" class="flex items-center justify-center gap-2 bg-gray-600 px-4 py-2 rounded text-white">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" class="h-5">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" class="h-5">
         <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg" class="h-5">
-        Pay with Credit Card
+        Credit Card
       </button>
 
-      <!-- PayPal -->
-      <button id="checkout-paypal" class="bg-yellow-400 text-black px-4 py-2 rounded flex items-center justify-center gap-2">
-        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" class="h-5">
-        Pay with PayPal
+      <button id="diamond-paypal" class="flex items-center justify-center gap-2 bg-yellow-400 px-4 py-2 rounded text-black">
+        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" class="h-5"> PayPal
       </button>
 
-      <!-- Paystack -->
-      <button id="checkout-paystack" class="bg-indigo-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2">
-        <img src="https://seeklogo.com/images/P/paystack-logo-1B9F0FA120-seeklogo.com.png" class="h-5">
-        Pay with Paystack
+      <button id="diamond-paystack" class="flex items-center justify-center gap-2 bg-indigo-600 px-4 py-2 rounded text-white">
+        <img src="https://seeklogo.com/images/P/paystack-logo-1B9F0FA120-seeklogo.com.png" class="h-5"> Paystack
       </button>
 
-      <!-- M-Pesa -->
-      <button id="checkout-mpesa" class="bg-green-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/M-PESA_logo.png" class="h-5">
-        Pay with M-Pesa
+      <button id="diamond-mpesa" class="flex items-center justify-center gap-2 bg-green-600 px-4 py-2 rounded text-white">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/M-PESA_logo.png" class="h-5"> M-Pesa
       </button>
     </div>
 
-    <button id="checkout-close" class="w-full py-2 bg-gray-500 rounded">Cancel</button>
+    <button id="diamond-close" class="w-full py-2 bg-gray-500 rounded">Cancel</button>
   </div>
 </div>
 
@@ -354,71 +344,66 @@ onAuthStateChanged(auth, async(user)=>{
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
-const planPrices = { Diamond: 499 };
+const diamondPrice = 499;
 
-// Open checkout modal
-document.querySelectorAll('.pay-now-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const plan = btn.dataset.plan;
-    const modal = document.getElementById('checkout-modal');
-    document.getElementById('checkout-plan-name').innerText = plan;
-    document.getElementById('checkout-plan-price').innerText = `$${planPrices[plan]}`;
-    modal.classList.remove('hidden');
+document.getElementById('diamond-pay-btn').onclick = () => {
+  document.getElementById('diamond-checkout-modal').classList.remove('hidden');
+};
 
-    // Credit Card placeholder
-    document.getElementById('checkout-cc').onclick = () => {
-      alert('Credit Card payment flow would open here');
-    };
+// Credit Card placeholder
+document.getElementById('diamond-cc').onclick = () => {
+  alert('Credit Card payment integration placeholder');
+};
 
-    // PayPal
-    document.getElementById('checkout-paypal').onclick = () => {
-      const price = planPrices[plan];
-      paypal.Buttons({
-        createOrder: (data, actions) => actions.order.create({
-          purchase_units: [{ amount: { value: price.toString() } }]
-        }),
-        onApprove: (data, actions) => actions.order.capture().then(details => {
-          alert(`PayPal Payment Completed by ${details.payer.name.given_name}`);
-          modal.classList.add('hidden');
-        })
-      }).render('#checkout-paypal');
-    };
+// PayPal
+document.getElementById('diamond-paypal').onclick = () => {
+  const price = diamondPrice;
+  paypal.Buttons({
+    createOrder: (data, actions) => actions.order.create({
+      purchase_units: [{ amount: { value: price.toString() } }]
+    }),
+    onApprove: (data, actions) => actions.order.capture().then(details => {
+      alert(`PayPal Payment Completed by ${details.payer.name.given_name}`);
+      document.getElementById('diamond-checkout-modal').classList.add('hidden');
+    })
+  }).render('#diamond-paypal');
+};
 
-    // Paystack
-    document.getElementById('checkout-paystack').onclick = () => {
-      const price = planPrices[plan] * 100;
-      const email = document.getElementById('checkout-email').value || 'customer@example.com';
-      var handler = PaystackPop.setup({
-        key: 'pk_live_7ffc2b84bc78834772aa6300d0cc489a06e5df76',
-        email,
-        amount: price,
-        currency: 'USD',
-        callback: function(response){
-          alert('Paystack Payment Successful! Ref: ' + response.reference);
-          modal.classList.add('hidden');
-        },
-        onClose: function(){ alert('Payment Cancelled'); }
-      });
-      handler.openIframe();
-    };
-
-    // M-Pesa
-    document.getElementById('checkout-mpesa').onclick = () => {
-      const phone = prompt("Enter your M-Pesa number (2547XXXXXXXX):");
-      if(!phone) return;
-      fetch('/mpesa-pay', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({phone, amount: planPrices[plan], plan})
-      }).then(res => res.json())
-        .then(data => {
-          alert(data.success ? 'Check phone to complete payment!' : 'Payment Failed');
-          modal.classList.add('hidden');
-        });
-    };
-
-    // Close modal
-    document.getElementById('checkout-close').onclick = () => modal.classList.add('hidden');
+// Paystack
+document.getElementById('diamond-paystack').onclick = () => {
+  const email = document.getElementById('diamond-email').value || 'customer@example.com';
+  var handler = PaystackPop.setup({
+    key: 'pk_live_7ffc2b84bc78834772aa6300d0cc489a06e5df76',
+    email,
+    amount: diamondPrice * 100,
+    currency: 'USD',
+    callback: function(response){
+      alert('Paystack Payment Successful! Ref: ' + response.reference);
+      document.getElementById('diamond-checkout-modal').classList.add('hidden');
+    },
+    onClose: function(){ alert('Payment Cancelled'); }
   });
-});
+  handler.openIframe();
+};
+
+// M-Pesa
+document.getElementById('diamond-mpesa').onclick = () => {
+  const phone = prompt("Enter M-Pesa number (2547XXXXXXXX):");
+  if(!phone) return;
+  fetch('/mpesa-pay', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({phone, amount: diamondPrice, plan:'Diamond'})
+  }).then(res => res.json())
+    .then(data => {
+      alert(data.success ? 'Check phone to complete payment!' : 'Payment Failed');
+      document.getElementById('diamond-checkout-modal').classList.add('hidden');
+    });
+};
+
+// Close modal
+document.getElementById('diamond-close').onclick = () => {
+  document.getElementById('diamond-checkout-modal').classList.add('hidden');
+};
 </script>
+  
