@@ -289,84 +289,10 @@ onAuthStateChanged(auth, async(user)=>{
   setInterval(updateLeaderboard,10000);
 });
 </script>
-<!-- Diamond Plan Card -->
-<div class="plan-card bg-[#3D2C41] p-6 rounded-xl shadow-lg max-w-md mx-auto text-center">
-  <h3 class="text-2xl font-bold mb-2">Diamond</h3>
-  <p class="mb-2 text-lg font-semibold">$499</p>
-
-  <ul class="text-left list-disc list-inside text-gray-300 mb-4">
-    <li>Everything in Pro</li>
-    <li>Priority AI model access (Hyper-realistic, Cinematic, Fantasy)</li>
-    <li>Commercial usage rights</li>
-    <li>Advanced effects, filters, scene optimization</li>
-    <li>Extended video length: 3 minutes max</li>
-    <li>Dedicated support</li>
-  </ul>
-
-  <button id="diamond-pay-btn" class="w-full py-2 bg-[#D4AF37] hover:bg-yellow-400 text-black font-bold">Pay Now</button>
-</div>
-
-<!-- Checkout Modal -->
-<div id="diamond-checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-  <div class="bg-[#3D2C41] p-6 rounded-xl w-96 text-white">
-    <h2 class="text-2xl font-bold mb-2">Diamond Checkout</h2>
-    <p class="mb-4">$499</p>
-
-    <!-- Email input -->
-    <label class="block mb-2">Contact Email</label>
-    <input type="email" id="diamond-email" class="w-full p-2 mb-4 rounded text-black" placeholder="you@example.com">
-
-    <div class="flex flex-col gap-3 mb-4">
-
-   <!-- Paystack -->
-<a href="https://paystack.shop/pay/4u6jdu7eft" target="_blank"
-   class="flex items-center justify-center gap-2 bg-indigo-600 px-4 py-2 rounded text-white">
-  <img src="https://cdn.jsdelivr.net/gh/paystackhq/paystack-brand-assets/logo/blue/paystack-logo.png" class="h-6" alt="Paystack"> Pay with Paystack
-</a>
-
-<!-- Stripe -->
-<a href="https://buy.stripe.com/eVq6oH0MO4Bm7Kifyi7Zu01" target="_blank"
-   class="flex items-center justify-center gap-2 bg-purple-600 px-4 py-2 rounded text-white">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Stripe_logo.svg" class="h-6" alt="Stripe"> Pay with Stripe
-</a>
-
-<!-- M-PESA -->
-<a href="#" class="flex items-center justify-center gap-2 bg-green-600 px-4 py-2 rounded text-white">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/M-PESA_LOGO-01.svg" class="h-6" alt="M-PESA"> Pay with M-PESA: 0113554446
-</a>
-
-
-      <!-- PayPal -->
-      <a href="https://www.paypal.com/ncp/payment/S77ESJWSU79JU" target="_blank"
-         class="flex items-center justify-center gap-2 bg-yellow-400 px-4 py-2 rounded text-black">
-        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" class="h-5" alt="PayPal"> Pay with PayPal
-      </a>
-      <!-- Credit Card (Visa, Mastercard, Amex) -->
-      <div class="flex justify-center gap-3 mt-2">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" class="h-5" alt="Visa">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" class="h-5" alt="Mastercard">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg" class="h-5" alt="Amex">
-      </div>
-
-    </div>
-
-    <button id="diamond-close" class="w-full py-2 bg-gray-500 rounded">Cancel</button>
-  </div>
-</div>
-
-<script>
-  const payBtn = document.getElementById('diamond-pay-btn');
-  const modal = document.getElementById('diamond-checkout-modal');
-  const closeBtn = document.getElementById('diamond-close');
-
-  payBtn.onclick = () => modal.classList.remove('hidden');
-  closeBtn.onclick = () => modal.classList.add('hidden');
-</script>
-<!-- Diamond Plan - Small Uniform Buttons -->
+  <!-- 💎 Diamond Plan with JVZoo-Style Payment Paycheck -->
 <div class="max-w-md mx-auto bg-[#3D2C41] p-6 rounded-2xl shadow-xl text-center text-white">
-  
   <h2 class="text-3xl font-bold mb-2 text-[#D4AF37]">Diamond Plan</h2>
-  <p class="text-lg mb-4 font-semibold">$449 - Full Access</p>
+  <p class="text-lg mb-4 font-semibold">$449 — Full Access</p>
 
   <ul class="text-left list-disc list-inside mb-6 text-gray-300 text-sm">
     <li>Unlimited access to all premium features</li>
@@ -376,54 +302,76 @@ onAuthStateChanged(auth, async(user)=>{
     <li>Access to new features before release</li>
   </ul>
 
-  <div class="flex flex-wrap gap-2 justify-center">
+  <!-- Paycheck Trigger -->
+  <button id="openPayModal"
+    class="bg-[#D4AF37] hover:bg-[#b8962d] text-[#3D2C41] font-bold py-2 px-6 rounded-xl shadow-md transition">
+    Pay Now
+  </button>
+</div>
+
+<!-- 🧾 Payment Paycheck Modal -->
+<div id="paymentModal" class="fixed inset-0 bg-black/60 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-2xl shadow-2xl w-80 p-6 text-center relative">
+    <button id="closePayModal" class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold">&times;</button>
+    
+    <h3 class="text-lg font-semibold text-[#3D2C41] mb-4">Choose Payment Method</h3>
+    
     <!-- PayPal -->
-    <div id="paypal-button-container" class="inline-block"></div>
+    <div id="paypal-button-container" class="mb-3"></div>
 
     <!-- Stripe -->
-    <button id="stripe-button" class="flex items-center justify-center gap-1 bg-[#6772E5] hover:bg-[#5469d4] text-white font-semibold px-2 py-1 rounded text-xs inline-flex">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-3" alt="Visa">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" class="h-3" alt="Mastercard">
-      Pay with Card
+    <button id="stripe-button"
+      class="w-full flex items-center justify-center gap-2 bg-[#6772E5] hover:bg-[#5469d4] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_2021.svg" class="h-4" alt="Visa">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="h-4" alt="Mastercard">
+      <span>Pay with Card (Stripe)</span>
     </button>
 
     <!-- Paystack -->
     <a href="https://paystack.shop/pay/4u6jdu7eft"
-       class="flex items-center justify-center gap-1 bg-[#3DA58A] hover:bg-[#2f8a74] text-white font-semibold px-2 py-1 rounded text-xs inline-flex">
-       <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Paystack_logo.png" class="h-3" alt="Paystack">
-       Pay with Paystack
+       class="w-full flex items-center justify-center gap-2 bg-[#3DA58A] hover:bg-[#2f8a74] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Paystack_logo.png" class="h-4" alt="Paystack">
+       <span>Pay with Paystack</span>
     </a>
 
     <!-- M-PESA -->
-    <button onclick="alert('Send payment to 0113554446 via M-PESA')"
-      class="flex items-center justify-center gap-1 bg-[#FFA500] hover:bg-[#e69500] text-white font-semibold px-2 py-1 rounded text-xs inline-flex">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/M-Pesa_Logo.svg" class="h-3" alt="M-PESA">
-      Pay with M-PESA
+    <button onclick="alert('📲 Send Ksh equivalent of $449 to 0113554446 via M-PESA, then confirm on WhatsApp.')"
+      class="w-full flex items-center justify-center gap-2 bg-[#FFA500] hover:bg-[#e69500] text-white font-semibold py-2 rounded-lg text-sm transition">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/M-Pesa_Logo.svg" class="h-4" alt="M-PESA">
+      <span>Pay with M-PESA</span>
     </button>
   </div>
 </div>
 
+<!-- 🧠 Scripts -->
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-  // Stripe Inline Checkout
+  // Modal Open/Close Logic
+  const modal = document.getElementById("paymentModal");
+  document.getElementById("openPayModal").addEventListener("click", () => modal.classList.remove("hidden"));
+  document.getElementById("closePayModal").addEventListener("click", () => modal.classList.add("hidden"));
+  modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
+
+  // Stripe Checkout
   const stripe = Stripe("pk_test_51RoZXfH4iReDKpeMyaPoyRU44hRqCDjQdLdw8Ala5gFdDYeCTSY1TeoxzxkcMxAG3RnOF2AoYTtOvBLOAsDwq56p00WiW0oT3i");
   document.getElementById("stripe-button").addEventListener("click", () => {
-    const sessionLink = "https://buy.stripe.com/test_session_id"; // replace with real session
+    const sessionLink = "https://buy.stripe.com/test_session_id"; // replace with real Stripe link
     window.open(sessionLink, "stripe-popup", "width=500,height=700");
   });
 
-  // PayPal SDK - small button
+  // PayPal SDK
   const PAYPAL_CLIENT_ID = "BAAQcVUbEKNwGhzFE9XggYcsAry02fNwd-m6U9NWdtWD_BwquRJLbZZUjvmDZBDp6rnL9i6Twm85ZLO-14";
   const script = document.createElement("script");
   script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD`;
   script.onload = () => {
     paypal.Buttons({
-      style: { layout: 'horizontal', color: 'gold', shape: 'pill', height: 25, tagline: false },
+      style: { layout: 'horizontal', color: 'gold', shape: 'pill', height: 35, tagline: false },
       createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: '449.00' } }] }),
-      onApprove: (data, actions) => actions.order.capture().then(details => alert("Payment completed! Transaction ID: " + details.id)),
-      onCancel: () => alert("Payment cancelled"),
+      onApprove: (data, actions) => actions.order.capture().then(details => alert("✅ Payment completed: " + details.id)),
+      onCancel: () => alert("❌ Payment cancelled"),
       onError: err => console.error(err)
     }).render('#paypal-button-container');
   };
   document.body.appendChild(script);
 </script>
+
