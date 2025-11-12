@@ -362,3 +362,68 @@ onAuthStateChanged(auth, async(user)=>{
   payBtn.onclick = () => modal.classList.remove('hidden');
   closeBtn.onclick = () => modal.classList.add('hidden');
 </script>
+<!-- Diamond Plan - Small Uniform Buttons -->
+<div class="max-w-md mx-auto bg-[#3D2C41] p-6 rounded-2xl shadow-xl text-center text-white">
+  
+  <h2 class="text-3xl font-bold mb-2 text-[#D4AF37]">Diamond Plan</h2>
+  <p class="text-lg mb-4 font-semibold">$449 - Full Access</p>
+
+  <ul class="text-left list-disc list-inside mb-6 text-gray-300 text-sm">
+    <li>Unlimited access to all premium features</li>
+    <li>High-quality video generation</li>
+    <li>Priority support</li>
+    <li>Exclusive templates & prompts</li>
+    <li>Access to new features before release</li>
+  </ul>
+
+  <div class="flex flex-wrap gap-2 justify-center">
+    <!-- PayPal -->
+    <div id="paypal-button-container" class="inline-block"></div>
+
+    <!-- Stripe -->
+    <button id="stripe-button" class="flex items-center justify-center gap-1 bg-[#6772E5] hover:bg-[#5469d4] text-white font-semibold px-2 py-1 rounded text-xs inline-flex">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-3" alt="Visa">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" class="h-3" alt="Mastercard">
+      Pay with Card
+    </button>
+
+    <!-- Paystack -->
+    <a href="https://paystack.shop/pay/4u6jdu7eft"
+       class="flex items-center justify-center gap-1 bg-[#3DA58A] hover:bg-[#2f8a74] text-white font-semibold px-2 py-1 rounded text-xs inline-flex">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Paystack_logo.png" class="h-3" alt="Paystack">
+       Pay with Paystack
+    </a>
+
+    <!-- M-PESA -->
+    <button onclick="alert('Send payment to 0113554446 via M-PESA')"
+      class="flex items-center justify-center gap-1 bg-[#FFA500] hover:bg-[#e69500] text-white font-semibold px-2 py-1 rounded text-xs inline-flex">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/M-Pesa_Logo.svg" class="h-3" alt="M-PESA">
+      Pay with M-PESA
+    </button>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // Stripe Inline Checkout
+  const stripe = Stripe("pk_test_51RoZXfH4iReDKpeMyaPoyRU44hRqCDjQdLdw8Ala5gFdDYeCTSY1TeoxzxkcMxAG3RnOF2AoYTtOvBLOAsDwq56p00WiW0oT3i");
+  document.getElementById("stripe-button").addEventListener("click", () => {
+    const sessionLink = "https://buy.stripe.com/test_session_id"; // replace with real session
+    window.open(sessionLink, "stripe-popup", "width=500,height=700");
+  });
+
+  // PayPal SDK - small button
+  const PAYPAL_CLIENT_ID = "BAAQcVUbEKNwGhzFE9XggYcsAry02fNwd-m6U9NWdtWD_BwquRJLbZZUjvmDZBDp6rnL9i6Twm85ZLO-14";
+  const script = document.createElement("script");
+  script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD`;
+  script.onload = () => {
+    paypal.Buttons({
+      style: { layout: 'horizontal', color: 'gold', shape: 'pill', height: 25, tagline: false },
+      createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: '449.00' } }] }),
+      onApprove: (data, actions) => actions.order.capture().then(details => alert("Payment completed! Transaction ID: " + details.id)),
+      onCancel: () => alert("Payment cancelled"),
+      onError: err => console.error(err)
+    }).render('#paypal-button-container');
+  };
+  document.body.appendChild(script);
+</script>
