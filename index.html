@@ -374,4 +374,90 @@ onAuthStateChanged(auth, async(user)=>{
   };
   document.body.appendChild(script);
 </script>
+<!-- 💎 Diamond Plan - JVZoo Style -->
+<div class="max-w-md mx-auto bg-[#3D2C41] p-6 rounded-2xl shadow-xl text-center text-white">
+  <h2 class="text-3xl font-bold mb-2 text-[#D4AF37]">Diamond Plan</h2>
+  <p class="text-lg mb-4 font-semibold">$449 — Full Lifetime Access</p>
+
+  <ul class="text-left list-disc list-inside mb-6 text-gray-300 text-sm">
+    <li>Unlimited HD & Ultra HD video generation</li>
+    <li>All premium templates & viral prompts</li>
+    <li>Priority Fast-Lane Support</li>
+    <li>Exclusive features unlocked instantly</li>
+    <li>Lifetime access to new tools</li>
+  </ul>
+
+  <!-- Paycheck Trigger -->
+  <button id="openPayModal"
+    class="bg-[#D4AF37] hover:bg-[#b8962d] text-[#3D2C41] font-bold py-2 px-6 rounded-xl shadow-md transition">
+    Pay Now
+  </button>
+</div>
+
+
+<!-- 🧾 Payment Paycheck Modal -->
+<div id="paymentModal" class="fixed inset-0 bg-black/60 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-2xl shadow-2xl w-80 p-6 text-center relative">
+    <button id="closePayModal" class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold">&times;</button>
+    
+    <h3 class="text-lg font-semibold text-[#3D2C41] mb-4">Choose Payment Method</h3>
+
+    <!-- PayPal -->
+    <div id="paypal-button-container" class="mb-4"></div>
+
+    <!-- Stripe -->
+    <button id="stripe-button"
+      class="w-full flex items-center justify-center gap-2 bg-[#6772E5] hover:bg-[#5469d4] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+      <span>💳 Pay with Card (Stripe)</span>
+    </button>
+
+    <!-- Paystack -->
+    <a href="https://paystack.shop/pay/4u6jdu7eft"
+       class="w-full flex items-center justify-center gap-2 bg-[#3DA58A] hover:bg-[#2f8a74] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+       <span>🌍 Pay with Paystack</span>
+    </a>
+
+    <!-- M-PESA -->
+    <button onclick="alert('📲 Send Ksh equivalent of $449 to 0113554446 via M-PESA, then confirm on WhatsApp.')"
+      class="w-full flex items-center justify-center gap-2 bg-[#FFA500] hover:bg-[#e69500] text-white font-semibold py-2 rounded-lg text-sm transition">
+      <span>📱 Pay with M-PESA</span>
+    </button>
+  </div>
+</div>
+
+
+<!-- 🧠 Scripts -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // Modal Controls
+  const modal = document.getElementById("paymentModal");
+  document.getElementById("openPayModal").addEventListener("click", () => modal.classList.remove("hidden"));
+  document.getElementById("closePayModal").addEventListener("click", () => modal.classList.add("hidden"));
+  modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
+
+  // Stripe Checkout Link
+  const STRIPE_CHECKOUT_URL = "https://buy.stripe.com/your-real-link-here";
+
+  document.getElementById("stripe-button").addEventListener("click", () => {
+    window.open(STRIPE_CHECKOUT_URL, "stripe-popup", "width=500,height=700");
+  });
+
+  // PayPal Setup
+  const PAYPAL_CLIENT_ID = "BAAQcVUbEKNwGhzFE9XggYcsAry02fNwd-m6U9NWdtWD_BwquRJLbZZUjvmDZBDp6rnL9i6Twm85ZLO-14";
+
+  const script = document.createElement("script");
+  script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD`;
+  script.onload = () => {
+    paypal.Buttons({
+      style: { layout: 'vertical', color: 'gold', shape: 'pill', height: 40, tagline: false },
+      createOrder: (data, actions) =>
+        actions.order.create({ purchase_units: [{ amount: { value: '449.00' } }] }),
+      onApprove: (data, actions) =>
+        actions.order.capture().then(details => alert("✅ Payment completed: " + details.id)),
+      onCancel: () => alert("❌ Payment cancelled"),
+      onError: err => console.error(err)
+    }).render('#paypal-button-container');
+  };
+  document.body.appendChild(script);
+</script>
 
