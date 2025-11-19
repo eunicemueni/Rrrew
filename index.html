@@ -461,3 +461,111 @@ onAuthStateChanged(auth, async(user)=>{
   document.body.appendChild(script);
 </script>
 
+  <!-- Robust payment script: paste this instead of your existing <script> blocks -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+(function () {
+  // Helper for safe element getting
+  const $ = (id) => document.getElementById(id);
+
+  // Elements
+  const modal = $('paymentModal');
+  const openBtn = $('openPayModal');
+  const closeBtn = $('closePayModal');
+  const stripeBtn = $('stripe-button');
+  const paypalContainerId = 'paypal-button-container';
+
+  console.log('[Payment] init script loaded');
+
+  if (!modal || !openBtn || !closeBtn) {
+    console.error('[Payment] Missing modal or control elements. Check IDs: paymentModal, openPayModal, closePayModal');
+    return;
+  }
+
+  // Modal controls
+  openBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.classList.remove('hidden');
+    console.log('[Payment] Modal opened');
+  });
+
+  const closeModal = () => {
+    modal.classList.add('hidden');
+    console.log('[Payment] Modal closed');
+  };
+
+  closeBtn.addEventListener('click', (e) => { e.preventDefault(); closeModal(); });
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+  // Stripe: open checkout link in popup
+  // Replace STRIPE_CHECKOUT_URL with your real Stripe checkout link
+  const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/your-real-link-here';
+  let stripe;
+  try {
+    stripe = Stripe('pk_test_51RoZXfH4iReDKpeMyaPoyRU44hRqCDjQdLdw8Ala5gFdDYeCTSY1TeoxzxkcMxAG3RnOF2AoYTtOvBLOAsDwq56p00WiW0oT3i');
+    console.log('[Payment] Stripe client initialized');
+  } catch (err) {
+    console.warn('[Payment] Stripe init error (this may be fine for a non-blocking button):', err);
+  }
+
+  if (stripeBtn) {
+    stripeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('[Payment] Stripe button clicked');
+      if (!STRIPE_CHECKOUT_URL) {
+        console.error('[Payment] No Stripe checkout URL set. Set STRIPE_CHECKOUT_URL to your real link.');
+        return;
+      }
+      // Open a centered popup
+      const w = 500, h = 700;
+      const left = (window.screen.width/2) - (w/2);
+      const top = (window.screen.height/2) - (h/2);
+      window.open(STRIPE_CHECKOUT_URL, 'stripe-popup', `width=${w},height=${h},left=${left},top=${top}`);
+    });
+  } else {
+    console.warn('[Payment] Stripe button not found (id="stripe-button")');
+  }
+
+  // PayPal: inject SDK then render buttons
+  const PAYPAL_CLIENT_ID = 'BAAQcVUbEKNwGhzFE9XggYcsAry02fNwd-m6U9NWdtWD_BwquRJLbZZUjvmDZBDp6rnL9i6Twm85ZLO-14';
+  const scriptSrc = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=USD`;
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      if (document.querySelector(`script[src="${src}"]`)) return resolve();
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = () => resolve();
+      s.onerror = (e) => reject(e);
+      document.head.appendChild(s);
+    });
+  }
+
+  loadScript(scriptSrc).then(() => {
+    console.log('[Payment] PayPal SDK loaded');
+    if (window.paypal && document.getElementById(paypalContainerId)) {
+      try {
+        paypal.Buttons({
+          style: { layout: 'vertical', color: 'gold', shape: 'pill', height: 40, tagline: false },
+          createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: '449.00' } }] }),
+          onApprove: (data, actions) => actions.order.capture().then(details => {
+            console.log('[Payment] PayPal approved:', details);
+            alert('✅ Payment completed: ' + (details.id || 'success'));
+            closeModal();
+          }),
+          onCancel: () => { console.log('[Payment] PayPal cancelled'); alert('❌ Payment cancelled'); },
+          onError: (err) => { console.error('[Payment] PayPal error', err); alert('Payment error (see console)'); }
+        }).render('#' + paypalContainerId);
+      } catch (err) {
+        console.error('[Payment] Error rendering PayPal buttons', err);
+      }
+    } else {
+      console.error('[Payment] PayPal SDK or container not available');
+    }
+  }).catch((err) => {
+    console.error('[Payment] Failed to load PayPal SDK', err);
+  });
+
+})();
+</script>
+
