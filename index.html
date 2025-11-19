@@ -568,4 +568,192 @@ onAuthStateChanged(auth, async(user)=>{
 
 })();
 </script>
+<!-- 🔹 Entry Plan -->
+<div class="max-w-md mx-auto bg-[#3D2C41] p-6 rounded-2xl shadow-xl text-center text-white">
+  <h2 class="text-3xl font-bold mb-2 text-[#D4AF37]">Entry Plan</h2>
+  <p class="text-lg mb-4 font-semibold">$149 — Full Access</p>
+
+  <ul class="text-left list-disc list-inside mb-6 text-gray-300 text-sm">
+    <li>Access to basic features</li>
+    <li>High-quality video generation</li>
+    <li>Standard support</li>
+    <li>Templates & prompts included</li>
+    <li>Access to future features</li>
+  </ul>
+
+  <button id="openEntryPayModal"
+    class="bg-[#D4AF37] hover:bg-[#b8962d] text-[#3D2C41] font-bold py-2 px-6 rounded-xl shadow-md transition">
+    Pay Now
+  </button>
+</div>
+
+<div id="entryPaymentModal" class="fixed inset-0 bg-black/60 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-2xl shadow-2xl w-80 p-6 text-center relative">
+    <button id="closeEntryPayModal" class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold">&times;</button>
+    
+    <h3 class="text-lg font-semibold text-[#3D2C41] mb-4">Choose Payment Method</h3>
+    
+    <!-- PayPal -->
+    <a href="https://www.paypal.com/ncp/payment/2X583XDXBYUPN" target="_blank"
+       class="w-full flex items-center justify-center gap-2 bg-[#003087] hover:bg-[#002060] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" class="h-4" alt="PayPal">
+       <span>Pay with PayPal</span>
+    </a>
+
+    <!-- Stripe Buy Button -->
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    <stripe-buy-button
+      buy-button-id="buy_btn_1SVATkH4iReDKpeMvZw5AKr0"
+      publishable-key="pk_live_51RoZXfH4iReDKpeMdW1C6mtNpEb6dXi2zzQmcO1BSI1j4sWdSkwlD0K2Q4Uu4Go3amDsrzRNYgosya2sp3K7c8nS00D0kNVJDF"
+      class="mb-3"
+    ></stripe-buy-button>
+
+    <!-- Paystack -->
+    <a href="https://paystack.shop/pay/ge2324r8fu" target="_blank"
+       class="w-full flex items-center justify-center gap-2 bg-[#3DA58A] hover:bg-[#2f8a74] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Paystack_logo.png" class="h-4" alt="Paystack">
+       <span>Pay with Paystack</span>
+    </a>
+
+    <!-- M-PESA -->
+    <button onclick="alert('📲 Send Ksh equivalent of $149 to 0113554446 via M-PESA, then confirm on WhatsApp.')"
+      class="w-full flex items-center justify-center gap-2 bg-[#FFA500] hover:bg-[#e69500] text-white font-semibold py-2 rounded-lg text-sm transition">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/M-Pesa_Logo.svg" class="h-4" alt="M-PESA">
+      <span>Pay with M-PESA</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const entryModal = document.getElementById("entryPaymentModal");
+  document.getElementById("openEntryPayModal").addEventListener("click", () => entryModal.classList.remove("hidden"));
+  document.getElementById("closeEntryPayModal").addEventListener("click", () => entryModal.classList.add("hidden"));
+  entryModal.addEventListener("click", (e) => { if (e.target === entryModal) entryModal.classList.add("hidden"); });
+</script>
+
+<!-- 🔹 Pro Plan -->
+<div class="max-w-md mx-auto bg-[#3D2C41] p-6 rounded-2xl shadow-xl text-center text-white">
+  <h2 class="text-3xl font-bold mb-2 text-[#D4AF37]">Pro Plan</h2>
+  <p class="text-lg mb-4 font-semibold">$299 — Full Access</p>
+
+  <ul class="text-left list-disc list-inside mb-6 text-gray-300 text-sm">
+    <li>Access to all premium features</li>
+    <li>High-quality video generation</li>
+    <li>Priority support</li>
+    <li>Exclusive templates & prompts</li>
+    <li>Early access to new features</li>
+  </ul>
+
+  <button id="openProPayModal"
+    class="bg-[#D4AF37] hover:bg-[#b8962d] text-[#3D2C41] font-bold py-2 px-6 rounded-xl shadow-md transition">
+    Pay Now
+  </button>
+</div>
+
+<div id="proPaymentModal" class="fixed inset-0 bg-black/60 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-2xl shadow-2xl w-80 p-6 text-center relative">
+    <button id="closeProPayModal" class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold">&times;</button>
+    
+    <h3 class="text-lg font-semibold text-[#3D2C41] mb-4">Choose Payment Method</h3>
+    
+    <!-- PayPal -->
+    <a href="https://www.paypal.com/ncp/payment/DVSZY7GB2QCYW" target="_blank"
+       class="w-full flex items-center justify-center gap-2 bg-[#003087] hover:bg-[#002060] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" class="h-4" alt="PayPal">
+       <span>Pay with PayPal</span>
+    </a>
+
+    <!-- Stripe Buy Button -->
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    <stripe-buy-button
+      buy-button-id="buy_btn_1SVAbIH4iReDKpeM3dbtoiVN"
+      publishable-key="pk_live_51RoZXfH4iReDKpeMdW1C6mtNpEb6dXi2zzQmcO1BSI1j4sWdSkwlD0K2Q4Uu4Go3amDsrzRNYgosya2sp3K7c8nS00D0kNVJDF"
+      class="mb-3"
+    ></stripe-buy-button>
+
+    <!-- Paystack -->
+    <a href="https://paystack.shop/pay/uli4nrj8xq" target="_blank"
+       class="w-full flex items-center justify-center gap-2 bg-[#3DA58A] hover:bg-[#2f8a74] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Paystack_logo.png" class="h-4" alt="Paystack">
+       <span>Pay with Paystack</span>
+    </a>
+
+    <!-- M-PESA -->
+    <button onclick="alert('📲 Send Ksh equivalent of $299 to 0113554446 via M-PESA, then confirm on WhatsApp.')"
+      class="w-full flex items-center justify-center gap-2 bg-[#FFA500] hover:bg-[#e69500] text-white font-semibold py-2 rounded-lg text-sm transition">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/M-Pesa_Logo.svg" class="h-4" alt="M-PESA">
+      <span>Pay with M-PESA</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const proModal = document.getElementById("proPaymentModal");
+  document.getElementById("openProPayModal").addEventListener("click", () => proModal.classList.remove("hidden"));
+  document.getElementById("closeProPayModal").addEventListener("click", () => proModal.classList.add("hidden"));
+  proModal.addEventListener("click", (e) => { if (e.target === proModal) proModal.classList.add("hidden"); });
+</script>
+
+<!-- 🔹 Lifetime Plan -->
+<div class="max-w-md mx-auto bg-[#3D2C41] p-6 rounded-2xl shadow-xl text-center text-white">
+  <h2 class="text-3xl font-bold mb-2 text-[#D4AF37]">Lifetime Plan</h2>
+  <p class="text-lg mb-4 font-semibold">$449 — Full Access</p>
+
+  <ul class="text-left list-disc list-inside mb-6 text-gray-300 text-sm">
+    <li>Unlimited access to all features</li>
+    <li>High-quality video generation</li>
+    <li>Priority support</li>
+    <li>Exclusive templates & prompts</li>
+    <li>Access to new features before release</li>
+  </ul>
+
+  <button id="openLifetimePayModal"
+    class="bg-[#D4AF37] hover:bg-[#b8962d] text-[#3D2C41] font-bold py-2 px-6 rounded-xl shadow-md transition">
+    Pay Now
+  </button>
+</div>
+
+<div id="lifetimePaymentModal" class="fixed inset-0 bg-black/60 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-2xl shadow-2xl w-80 p-6 text-center relative">
+    <button id="closeLifetimePayModal" class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl font-bold">&times;</button>
+    
+    <h3 class="text-lg font-semibold text-[#3D2C41] mb-4">Choose Payment Method</h3>
+    
+    <!-- PayPal -->
+    <a href="https://www.paypal.com/ncp/payment/K4Y9SVNW76XY" target="_blank"
+       class="w-full flex items-center justify-center gap-2 bg-[#003087] hover:bg-[#002060] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" class="h-4" alt="PayPal">
+       <span>Pay with PayPal</span>
+    </a>
+
+    <!-- Stripe Buy Button -->
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    <stripe-buy-button
+      buy-button-id="buy_btn_1SVAdaH4iReDKpeMZZnaOxr6"
+      publishable-key="pk_live_51RoZXfH4iReDKpeMdW1C6mtNpEb6dXi2zzQmcO1BSI1j4sWdSkwlD0K2Q4Uu4Go3amDsrzRNYgosya2sp3K7c8nS00D0kNVJDF"
+      class="mb-3"
+    ></stripe-buy-button>
+
+    <!-- Paystack -->
+    <a href="https://paystack.shop/pay/-cdm6oobkz" target="_blank"
+       class="w-full flex items-center justify-center gap-2 bg-[#3DA58A] hover:bg-[#2f8a74] text-white font-semibold py-2 rounded-lg text-sm transition mb-3">
+       <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Paystack_logo.png" class="h-4" alt="Paystack">
+       <span>Pay with Paystack</span>
+    </a>
+
+    <!-- M-PESA -->
+    <button onclick="alert('📲 Send Ksh equivalent of $449 to 0113554446 via M-PESA, then confirm on WhatsApp.')"
+      class="w-full flex items-center justify-center gap-2 bg-[#FFA500] hover:bg-[#e69500] text-white font-semibold py-2 rounded-lg text-sm transition">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/M-Pesa_Logo.svg" class="h-4" alt="M-PESA">
+      <span>Pay with M-PESA</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const lifetimeModal = document.getElementById("lifetimePaymentModal");
+  document.getElementById("openLifetimePayModal").addEventListener("click", () => lifetimeModal.classList.remove("hidden"));
+  document.getElementById("closeLifetimePayModal").addEventListener("click", () => lifetimeModal.classList.add("hidden"));
+  lifetimeModal.addEventListener("click", (e) => { if (e.target === lifetimeModal) lifetimeModal.classList.add("hidden"); });
+</script>
 
